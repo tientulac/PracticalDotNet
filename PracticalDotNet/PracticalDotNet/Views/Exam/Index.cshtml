@@ -1,0 +1,85 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+
+}
+
+<h2>Index</h2>
+@{ Html.BeginForm("Index", "Exam", FormMethod.Get);}
+@Html.TextBox("search")
+<select name="classroomId" class="form-control">
+    <option value="">Select Classroom</option>
+    @foreach (PracticalDotNet.Models.Classroom item in Model.Classrooms)
+    {
+        <option @(ViewBag.ClassroomId == item.Id ? "selected" : "") value="@item.Id">@item.Name</option>
+    }
+</select>
+<button type="submit">Search</button>
+@{ Html.EndForm();}
+<p>
+    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Sort by Name ASC", "Index", new { sortOrder = "asc" })
+    @Html.ActionLink("Sort by Name DESC", "Index", new { sortOrder = "desc" })
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            Classroom
+        </th>
+        <th>
+            Faculty
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Start time
+        </th>
+        <th>
+            Exam date
+        </th>
+        <th>
+            Exam duration (minutes)
+        </th>
+        <th>
+            Status
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (PracticalDotNet.Models.Exam item in Model.Exams)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Classroom.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Faculty.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start_time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Exam_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Exam_duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
